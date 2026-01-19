@@ -8,11 +8,11 @@ L = 1;
 
 total=zeros(1,21);
 
-for dB =0:1:20
+for dB =0:1:20 
     disp(dB);
     SNR=10^(dB/10);
     [Bits,Symbols0]=Transmitter(M,N,Block_Num,C);
-    Symbols1=Channel(Symbols0,L,SNR);
+    Symbols1=Channel(Symbols0,L,N,M,SNR);
     Bitsre=Receiver(M,N,Block_Num,C,Symbols1);
     total(1,dB+1)=sum(Bits~=Bitsre)/(N*(M+1)*Block_Num);
 end

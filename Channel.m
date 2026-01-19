@@ -1,4 +1,4 @@
-function Symbols1=Channel(Symbols0,L,SNR)
+function Symbols1=Channel(Symbols0,L,N,M,SNR)
     [P,Block_Num]=size(Symbols0);
     if L==1
         aphla=1;%退化为AWGN信道
@@ -27,7 +27,10 @@ function Symbols1=Channel(Symbols0,L,SNR)
     nr=randn(P,Block_Num);          
     ni=randn(P,Block_Num);          
     Noise=(sqrt(2)/2)*(nr+1i*ni); 
-    Symbols1=Symbols1+(1/sqrt(SNR))*Noise;
+    theta = N * 2^M; % 需确保Channel函数能获取M和N
+    Eb_actual = theta * (N + 1) / (N * (M + 1));
+    noise_scale = sqrt(Eb_actual / SNR);
+    Symbols1 = Symbols1 + noise_scale * Noise;
 end
 
 

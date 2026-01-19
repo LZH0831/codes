@@ -21,7 +21,7 @@ function [Bits,Symbols0]=Transmitter(M,N,Block_Num,C)
             for k=1:M
                 local_idx=local_idx+map_bits(k)*2^(M-k);
             end
-            zn=(n-1)*(2^M)+local_idx;
+            zn=(n-1)*(2^M)+local_idx+1;
             qn=2*mod_bit-1;
             cx2=circshift(cx,[0,zn]);
             info_seq=info_seq+qn*cx2;
