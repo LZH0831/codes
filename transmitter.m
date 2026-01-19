@@ -19,7 +19,7 @@ function [Bits,Symbols0]=Transmitter(M,N,Block_Num,C)
             mod_bit=bits3(end);
             local_idx=0;
             for k=1:M
-                local_idx=local_idx+map_bits(k)*2^(M-k)+1;
+                local_idx=local_idx+map_bits(k)*2^(M-k);
             end
             zn=(n-1)*(2^M)+local_idx+1;
             qn=2*mod_bit-1;
