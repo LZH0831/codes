@@ -3,7 +3,7 @@ clear; clc; close all;
 M = 7;     
 N_arr = [1,2,3];            
 C = 2;             
-Block_Num = 100000;
+Block_Num = 200000;
 L_arr = [1,2];
 
 total=zeros(2,3,25);
@@ -19,7 +19,7 @@ for l=1:length(L_arr)
             Bitsre=Receiver(M,N,Block_Num,C,Symbols1);
             total(l,n,dB+1)=sum(Bits~=Bitsre)/(N*(M+1)*Block_Num);
             if total(l,n,dB+1)==0
-                fprintf('   >>> 误码率为0,跳过后续 SNR 点\n');
+                fprintf('   >>> 误码率为0,跳过后续 SNR 点\n'); 
                 break;
             end
         end

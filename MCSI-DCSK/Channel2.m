@@ -4,7 +4,7 @@ function Symbols1 = Channel2(Symbols0, tau_vec, N, M, SNR)
     L = length(tau_vec);  
     pre_alpha = zeros(1, L);
     for b = 1:Block_Num
-        cur_alpha = (sqrt(1/(2*L))) * (randn(1, L) + 1i * randn(1, L));
+        cur_alpha = sqrt(1/(2*L))*sqrt(randn(1,L).^2+randn(1,L).^2);
         cur_block = zeros(P, 1);
         for l = 1:L
             Tau = tau_vec(l); 
@@ -13,7 +13,7 @@ function Symbols1 = Channel2(Symbols0, tau_vec, N, M, SNR)
         end
         pre_block = zeros(P, 1);
         if b > 1
-            for l = 1:L
+            for l = 2:L
                 Tau = tau_vec(l);
                 tail = Symbols0(end-Tau+1:end, b-1);
                 pre_block(1:Tau) = pre_block(1:Tau) + pre_alpha(l) * tail;
@@ -22,9 +22,8 @@ function Symbols1 = Channel2(Symbols0, tau_vec, N, M, SNR)
         Symbols1(:, b) = cur_block + pre_block;
         pre_alpha = cur_alpha;
     end
-    nr=randn(P,Block_Num);          
-    ni=randn(P,Block_Num);
+    nr=randn(P, Block_Num);          
     Eb=mean(sum(abs(Symbols0).^2))/(N*(M+1));
-    Noise=sqrt(Eb/SNR)*(sqrt(2)/2)*(nr+1i*ni); 
-    Symbols1 = Symbols1+Noise;   
+    Noise=sqrt(Eb/(2*SNR))*nr; 
+    Symbols1=Symbols1+Noise;
 end

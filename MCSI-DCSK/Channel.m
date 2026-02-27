@@ -1,12 +1,12 @@
 function Symbols1=Channel(Symbols0,L,N,M,SNR)
     [P,Block_Num]=size(Symbols0);
     Symbols1=zeros(P,Block_Num);
-    pre_alpha=zeros(1,L);
+    pre_alpha=zeros(1,L); 
     for b=1:Block_Num
         if L==1
-            cur_alpha=1;%退化为AWGN信道
+            cur_alpha=1; % 退化为AWGN信道
         else
-            cur_alpha=(sqrt(1/(2*L)))*(randn(1,L)+1i*randn(1,L));
+            cur_alpha = sqrt(1/(2*L))*sqrt(randn(1,L).^2+randn(1,L).^2);
         end
         cur_block=zeros(P,1);
         for l=1:L
@@ -26,9 +26,8 @@ function Symbols1=Channel(Symbols0,L,N,M,SNR)
         pre_alpha=cur_alpha;
     end
     
-    nr=randn(P,Block_Num);          
-    ni=randn(P,Block_Num);
+    nr=randn(P, Block_Num);          
     Eb=mean(sum(abs(Symbols0).^2))/(N*(M+1));
-    Noise=sqrt(Eb/SNR)*(sqrt(2)/2)*(nr+1i*ni); 
-    Symbols1 = Symbols1+Noise;
+    Noise=sqrt(Eb/(2*SNR))*nr; 
+    Symbols1=Symbols1+Noise;
 end
