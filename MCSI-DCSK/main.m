@@ -37,7 +37,8 @@ for i = 1:2
 end
 set(gca, 'Yscale', 'log');
 ylim([1e-5 1]);      
-xlim([0 24]);         
+xlim([0 24]);  
+set(gca, 'XTick', 0:2:24);       
 xlabel('Eb/N0 (dB)', 'FontSize', 12);
 ylabel('BER', 'FontSize', 12);
 legend('N=1, \beta=256, Simulation', ...
